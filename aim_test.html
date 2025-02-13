@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>마우스 에임 테스트</title>
+    <style>
+        body { text-align: center; font-family: Arial, sans-serif; }
+        #gameArea { width: 500px; height: 500px; background: lightgray; position: relative; margin: auto; }
+        .target { width: 30px; height: 30px; background: red; border-radius: 50%; position: absolute; cursor: pointer; }
+    </style>
+</head>
+<body>
+    <h1>마우스 에임 테스트</h1>
+    <p>빨간 점을 최대한 빨리 클릭하세요!</p>
+    <div id="gameArea"></div>
+    <p id="score">점수: 0</p>
+    
+    <script>
+        const gameArea = document.getElementById('gameArea');
+        let score = 0;
+
+        function spawnTarget() {
+            let target = document.createElement('div');
+            target.classList.add('target');
+            target.style.left = Math.random() * (gameArea.clientWidth - 30) + 'px';
+            target.style.top = Math.random() * (gameArea.clientHeight - 30) + 'px';
+            
+            target.onclick = function() {
+                score++;
+                document.getElementById('score').innerText = '점수: ' + score;
+                gameArea.removeChild(target);
+                spawnTarget();
+            };
+
+            gameArea.appendChild(target);
+        }
+
+        spawnTarget(); // 게임 시작
+    </script>
+</body>
+</html>
